@@ -1,5 +1,28 @@
 {
   "dependencies": {
-    "inquirer": "^9.1.4"
-  }
+    "inquirer": "^8.2.4"
+  },
+  "name": "team-profile-generator",
+  "description": "",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "devDependencies": {
+    "jest": "^29.4.2"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Musadaq23/Team-Profile-Generator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Musadaq23/Team-Profile-Generator/issues"
+  },
+  "homepage": "https://github.com/Musadaq23/Team-Profile-Generator#readme"
 }
