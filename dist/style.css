@@ -1,6 +1,4 @@
-const fs = require('fs');
-
-const css = `body{
+body{
   background-color: rgb(0, 200, 200);
 }
 header{
@@ -55,9 +53,3 @@ p{
   font-family: Arial, Helvetica, sans-serif;
   border: 1px solid black;
 }
-`
-const generateCSS = () => {
-  fs.writeFile("..\\Team-Profile-Generator\\dist\\style.css", css, (err) => err ? console.error(err) : console.log('CSS has been generated!'));
-}
-
-module.exports = generateCSS;

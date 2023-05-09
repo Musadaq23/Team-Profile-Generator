@@ -5,7 +5,8 @@ const Engineer = require("../lib/Engineer");
 const Intern = require("../lib/Intern");
 
 const generateHTML = (team) => {
-    const teamFolder = team.map(employee => {
+    let teamFolder = '';
+    for (const employee of team) {
       let iEl, roleAttribute;
       if (employee.getRole() === 'Manager') {
         iEl = '<i class="fa-solid fa-mug-hot"></i>';
@@ -17,20 +18,16 @@ const generateHTML = (team) => {
         iEl = '<i class="fa-solid fa-graduation-cap"></i>';
         roleAttribute = `School = ${employee.school}`;
       }
-      return `<div id="employee-container">
+
+      let Folder =  `<div id="employee-container">
         <h3>
           <span>${employee.getName()} <br> ${iEl} ${employee.getRole()}</span>
         </h3>
         <p>ID: ${employee.id} <br> Email: <a target="_blank" href="mailto:${employee.email}">${employee.email}</a> <br> ${roleAttribute}</p>
       </div>`;
-    }).join('');
-    return teamFolder;
-
-
-}
-
-const team = [new Manager(), new Engineer(), new Intern()];
-const teamFolder = generateHTML(team);
+    
+   teamFolder += Folder;
+  }
 
 const html = `
 <html lang="en">
@@ -38,8 +35,8 @@ const html = `
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Team Profile</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://kit-pro.fontawesome.com/releases/v5.15.3/css/pro.min.css" integrity="sha384-9S+up0gKPL+nGcJ6w/7Gx5Lu5UPv2oiIVNq/i/n9O6NrzU6OvA6ZLcA6y1xhWjRo" crossorigin="anonymous">
+  <link rel="stylesheet" href="./style.css">
+  <script src="https://kit.fontawesome.com/f00756d63b.js" crossorigin="anonymous"></script>
 </head>
 <body>
   <header>
@@ -54,6 +51,7 @@ const html = `
 fs.writeFile("..\\Team-Profile-Generator\\dist\\index.html", html, (err) =>
   err ? console.error(err) : console.log("HTML has been generated!")
 );
+}
 
 
 module.exports = generateHTML;

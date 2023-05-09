@@ -5,182 +5,69 @@ const generateCSS = require("./src/generateCSS");
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
-const team = [];
 
+let team = [];
 
 const init = (team) => {
-    generateHTML(team);
-    generateCSS(team);
+  generateHTML(team);
+  generateCSS();
 }
 
-function createTeam() {
-  const addTeam = () => {
-    inquirer
-      .prompt([
+  
+const addTeam = () => {
+    inquirer.prompt([
         {
           type: "list",
           name: "memberRole",
           message: "would you like to add another member to your team?",
           choices: ["Engineer", "Intern", "Finish Building Team"],
-        },
-      ])
-      .then((chosen) => {
-        switch (chosen.memberRole) {
-          case "Engineer":
-            addEngineer();
-            break;
-          case "Intern":
-            addIntern();
-            break;
-          case "Finish Building team":
-            console.log(team);
-            addTeam();
         }
-      });
-  };
-  function addManager() {
-    inquirer
-      .prompt([
-        {
-          name: "name",
-          type: "input",
-          message: "what is manager's name?",
-          validate: (name) => {
-            if (name) {
-              return true;
-            } else {
-              return false;
-            }
-          },
-        },
-
-        {
-          name: "id",
-          type: "number",
-          message: "what is manager's ID number?",
-          validate: (id) => {
-            if (id) {
-              return true;
-            } else {
-              return false;
-            }
-          },
-        },
-
-        {
-          name: "email",
-          type: "input",
-          message: "what is manager's email?",
-          validate: (email) => {
-            if (email) {
-              return true;
-            } else {
-              return false;
-            }
-          },
-        },
-
-        {
-          name: "officeNumber",
-          type: "input",
-          message: "what is manager's office number?",
-          validate: (officeNumber) => {
-            if (officeNumber) {
-              return true;
-            } else {
-              return false;
-            }
-          },
-        },
-      ])
-      .then((answers) => {
-        const manager = new Manager(
-          answers.name,
-          answers.id,
-          answers.email,
-          answers.officeNumber
-        );
-        team.push(manager);
-        addTeam();
-      });
-    }
-    function addEngineer() {
-      inquirer
-        .prompt([
+      ]).then((answer) => {
+        if (answer.memberRole === "Engineer") {
+          inquirer.prompt([
           {
             type: "input",
             name: "name",
             message: "Enter the name of your Engineer",
-            validate: (name) => {
-              if (name) {
-                return true;
-              } else {
-                return false;
-              }
-            },
           },
 
           {
-            type: "number",
+            type: "input",
             name: "id",
             message: "Enter ID of the Engineer",
-            validate: (id) => {
-              if (id) {
-                return true;
-              } else {
-                return false;
-              }
-            },
           },
 
           {
             type: "input",
             name: "email",
             message: "Enter the Engineers email",
-            validate: (email) => {
-              if (email) {
-                return true;
-              } else {
-                return false;
-              }
-            },
           },
 
           {
             type: "input",
-            name: "Github",
+            name: "github",
             message: "Enter the Github username of your Engineer",
-            validate: (Github) => {
-              if (Github) {
-                return true;
-              } else {
-                return false;
-              }
-            },
           },
-        ])
-        .then((answers) => {
+        ]).then((answer) => {
           const engineer = new Engineer(
-            answers.name,
-            answers.id,
-            answers.email,
-            answers.Github
-          );
+            answer.name,
+            answer.id,
+            answer.email,
+            answer.github
+          )
           team.push(engineer);
           addTeam();
-        });
-    }
-
-    function addIntern() {
-      inquirer
-        .prompt([
+        })
+      } else if (answer.memberRole === "Intern"){
+      inquirer.prompt([
           {
             type: "input",
             name: "name",
             message: "Enter the name of your Intern",
+
           },
           {
-            type: "number",
+            type: "input",
             name: "id",
             message: "Enter the ID of your Intern",
           },
@@ -195,18 +82,53 @@ function createTeam() {
             name: "school",
             message: "Enter the name of the school for your Intern",
           },
-        ])
-        .then((answers) => {
+        ]).then((answer) => {
           const intern = new Intern(
-            answers.name,
-            answers.id,
-            answers.email,
-            answers.school
+            answer.name,
+            answer.id,
+            answer.email,
+            answer.school
           );
-          team.push(intern);
+          team.push(intern)
           addTeam();
-        });
-    }
-    addManager();
-}
-createTeam();
+        })
+      }else {
+        init(team);
+      }
+    })
+  }
+
+    inquirer.prompt([
+        {
+          name: "name",
+          type: "input",
+          message: "what is manager's name?",
+        },
+  
+        {
+          name: "id",
+          type: "number",
+          message: "what is manager's ID number?",
+        },
+  
+        {
+          name: "email",
+          type: "input",
+          message: "what is manager's email?",
+        },
+  
+        {
+          name: "officeNumber",
+          type: "input",
+          message: "what is manager's office number?",
+        },
+      ]).then((answer) => {
+        const manager = new Manager(
+          answer.name,
+          answer.id,
+          answer.email,
+          answer.officeNumber
+        );
+        team = [manager];
+        addTeam();
+      })
